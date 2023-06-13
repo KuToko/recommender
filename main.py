@@ -18,8 +18,8 @@ async def http_exception_handler(request, exc):
     )
 
 
-model_path = "saved_model"
-model = tf.saved_model.load(model_path)
+recommender_path = "saved_model"
+recommender = tf.saved_model.load(recommender_path)
 
 
 @app.get("/")
@@ -34,7 +34,7 @@ async def businesses_recommendation(uuid: str, authorization: str = Depends(veri
         if user is None:
             raise HTTPException(status_code=404, detail="User not found")
         serial = user.serial
-        scores, titles = model([serial])
+        scores, titles = recommender([serial])
         titles = [title.decode("utf-8") for title in titles.numpy()[0]]
         businesses = session.query(Business.id).filter(Business.name.in_(titles)).all()
         businesses_ids = [business.id for business in businesses]
