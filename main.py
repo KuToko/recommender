@@ -47,12 +47,12 @@ async def businesses_similar(uuid: str, authorization: str = Depends(verify_toke
         business = session.query(Business).filter(Business.id == uuid).first()
         if business is None:
             raise HTTPException(status_code=404, detail="Business not found")
-
         business_name = [business.name]
-        business_vector = vectorized.transform(business_name).toArray()
+        business_vector = vectorized.transform(business_name)
         predictions = similar.predict(business_vector)
         similar_indices = predictions.argsort()[0][-5:]
-        businesses = session.query(Business.id).filter(Business.serial.in_(similar_indices)).all()
+        serials = similar_indices.tolist()
+        businesses = session.query(Business.id).filter(Business.serial.in_(serials)).all()
         businesses_ids = [business.id for business in businesses]
         return {"error": False, "message": "Success", "data": businesses_ids}
     except (ValueError, KeyError):
