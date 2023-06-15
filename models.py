@@ -135,6 +135,7 @@ class Business(Base):
     place_id = Column(String(255))
     added_from_system = Column(Boolean, nullable=False, server_default=text("false"))
     link_theme = Column(String(255))
+    serial = Column(BigInteger, server_default=text("nextval('businesses_unique_id_seq'::regclass)"))
 
     user = relationship('User', primaryjoin='Business.claim_by == User.id')
     user1 = relationship('User', primaryjoin='Business.created_by == User.id')

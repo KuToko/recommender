@@ -11,3 +11,6 @@ worker_class = 'uvicorn.workers.UvicornWorker'
 loglevel = 'debug'
 accesslog = '/home/m163dsx2931/recommender/access_log'
 errorlog =  '/home/m163dsx2931/recommender/error_log'
+
+# Auto Restart Options
+reload = True
