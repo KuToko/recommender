@@ -11,7 +11,6 @@ This project is part of the larger KuToko app project, which helps users find ne
 1. [Installation](#installation)
 2. [File Descriptions](#file-descriptions)
 3. [Usage](#usage)
-4. [Contributing](#contributing)
 
 ## Installation
 
